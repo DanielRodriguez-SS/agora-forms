@@ -116,9 +116,9 @@ with st.expander("Promotion Details"):
     promo_details.end_time = str(end_time)
 
     if 'Fixed' not in shop:
-        add_emial_noty = st.radio('Add text to emails notifications?',['No','Yes'])
+        add_emial_noty = st.radio('Add text to email notification?',['No','Yes'])
         if add_emial_noty == 'Yes':
-            email_noty = st.text_area("This text will be added on emials confirmation sent to customers",placeholder='e.g. Get $250 off your bill on Samsung S21+5G.')
+            email_noty = st.text_area("This text will be added on the email confirmation sent to customers",placeholder='e.g. Get $250 off your bill on Samsung S21+5G.')
             promo_details.email_coms = email_noty
 
 st.markdown("""<div style="background-color:rgb(239,48,57);height:1.5rem;width:1.5rem;border-radius:50%;text-align:center;margin-bottom:.5rem;margin-top:.5rem;">3</div>""", unsafe_allow_html=True)
