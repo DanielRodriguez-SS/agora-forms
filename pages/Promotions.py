@@ -105,10 +105,10 @@ with st.expander("Promotion Details"):
     col_start, col_end = st.columns(2)
     with col_start:
         start_date = st.date_input('Start Date:')
-        start_time = st.time_input('Start Time:')
+        start_time = st.time_input('Start Time:', step=60)
     with col_end:
         end_date = st.date_input('End Date:')
-        end_time = st.time_input('End Time:')
+        end_time = st.time_input('End Time:', step=60)
     
     promo_details.start_date = str(start_date)
     promo_details.start_time = str(start_time)
