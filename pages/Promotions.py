@@ -3,6 +3,7 @@ import frontend.styling as css
 from shop_map import tree
 from dataclasses import dataclass
 from pdf_builder import generate_pdf_file
+import datetime
 
 @dataclass
 class ProductInfo:
@@ -105,10 +106,10 @@ with st.expander("Promotion Details"):
     col_start, col_end = st.columns(2)
     with col_start:
         start_date = st.date_input('Start Date:')
-        start_time = st.time_input('Start Time:', step=60)
+        start_time = st.time_input('Start Time:',datetime.time())
     with col_end:
         end_date = st.date_input('End Date:')
-        end_time = st.time_input('End Time:', step=60)
+        end_time = st.time_input('End Time:', datetime.time())
     
     promo_details.start_date = str(start_date)
     promo_details.start_time = str(start_time)
