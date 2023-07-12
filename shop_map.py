@@ -1,7 +1,7 @@
 from products_puller import collect_products_from_shopAPIs
 
 tree =  {
-            'Pospaid':{
+            'Postpaid':{
                         'Segment':['Consumer','Small Business'],
                         'Customer Type':['New','Porting','Upgrade'],
                         'Device Type':{
