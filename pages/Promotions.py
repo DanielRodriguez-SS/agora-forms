@@ -59,11 +59,20 @@ with st.expander("Product Information"):
         if plan_options:
             plan = st.multiselect('On Plans:',plan_options, help=tcom_link)
             product_info.plans = plan
-            if product_options:
-                apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
-                if apply_to_all == 'Yes':
-                    products = st.multiselect('Products:',product_options)
-                    product_info.products = products
+            
+            # if product_options:
+            #     apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
+            #     if apply_to_all == 'Yes':
+            #         products = st.multiselect('Products:',product_options)
+            #         product_info.products = products
+            
+            
+            apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
+            if apply_to_all == 'Yes':
+                products = st.text_input('Products')
+                #products = st.multiselect('Products:',product_options)
+                product_info.products = products
+
         else:
             if product_options:
                 products = st.multiselect('Products:',product_options)
