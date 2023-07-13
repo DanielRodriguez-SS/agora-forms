@@ -60,18 +60,18 @@ with st.expander("Product Information"):
             plan = st.multiselect('On Plans:',plan_options, help=tcom_link)
             product_info.plans = plan
             
-            # if product_options:
-            #     apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
-            #     if apply_to_all == 'Yes':
-            #         products = st.multiselect('Products:',product_options)
-            #         product_info.products = products
+            if product_options:
+                apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
+                if apply_to_all == 'Yes':
+                    products = st.multiselect('Products:',product_options)
+                    product_info.products = products
             
-            
-            apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
-            if apply_to_all == 'Yes':
-                products = st.text_input('Products',placeholder="Please type product names separated by , . ")
-                #products = st.multiselect('Products:',product_options)
-                product_info.products = products
+            #### Turn back if Streamlit is not gettign response from APIs
+            # apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
+            # if apply_to_all == 'Yes':
+            #     products = st.text_input('Products',placeholder="Please type product names separated by , . ")
+            #     #products = st.multiselect('Products:',product_options)
+            #     product_info.products = products
 
         else:
             if product_options:
