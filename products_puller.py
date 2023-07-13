@@ -41,7 +41,7 @@ async def gather_tasks():
     return await asyncio.gather(*tasks)    
 
 
-@st.cache_data(show_spinner=False,ttl=3600)
+#@st.cache_data(show_spinner=False,ttl=3600)
 def collect_products_from_shopAPIs() -> dict:
     #results_dicts = asyncio.run(gather_tasks())
     
