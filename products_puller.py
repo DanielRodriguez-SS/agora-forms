@@ -43,16 +43,16 @@ async def gather_tasks():
     return await asyncio.gather(*tasks)    
 
 
-#@st.cache_data(show_spinner=False,ttl=3600)
+@st.cache_data(show_spinner=False,ttl=3600)
 def collect_products_from_shopAPIs() -> dict:
     
-    #results_dicts = asyncio.run(gather_tasks())
+    results_dicts = asyncio.run(gather_tasks())
     
     #####################################
-    shops = asdict(PublicAPIs())
-    results_dicts = []
-    for key in shops:
-        results_dicts.append(get_products_from_shop(shops[key],key))
+    # shops = asdict(PublicAPIs())
+    # results_dicts = []
+    # for key in shops:
+    #     results_dicts.append(get_products_from_shop(shops[key],key))
     ###################################
     
     pack_dict = {}
