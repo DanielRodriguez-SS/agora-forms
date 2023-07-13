@@ -69,7 +69,7 @@ with st.expander("Product Information"):
             
             apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
             if apply_to_all == 'Yes':
-                products = st.text_input('Products',placeholder="Please type product names separated by a ','. ")
+                products = st.text_input('Products',placeholder="Please type product names separated by , . ")
                 #products = st.multiselect('Products:',product_options)
                 product_info.products = products
 
