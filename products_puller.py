@@ -22,6 +22,7 @@ def fetch(session:requests, url:str) -> requests.Response:
 
 def get_products_from_shop(shop_url:str, shop_name:str) -> dict[str,list]:
     response = fetch(session, url=shop_url)
+    print(shop_url)
     print(response)
     product_families =  response['data']['deviceFamilies']
     devices = []
