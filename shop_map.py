@@ -7,18 +7,18 @@ tree =  {
                         'Device Type':{
                                         'Mobile':{'entry_point':'',
                                                   'plans':['Basic','Essential','Premium'],
-                                                  #'products':collect_products_from_shopAPIs()['CONSUMER_MOBILE']
-                                                  'products':[]
+                                                  'products':collect_products_from_shopAPIs()['CONSUMER_MOBILE']
+                                                  #'products':[]
                                                   },
                                         'Tablet':{'entry_point':'',
                                                   'plans':['Small','Medium','Large'],
-                                                  #'products':collect_products_from_shopAPIs()['CONSUMER_TABLET']
-                                                  'products':[]
+                                                  'products':collect_products_from_shopAPIs()['CONSUMER_TABLET']
+                                                  #'products':[]
                                                  },                                        
                                         'Mbb':{'entry_point':'',
                                                   'plans':['Small','Medium','Large'],
-                                                  #'products':collect_products_from_shopAPIs()['CONSUMER_MBB']
-                                                  'products':[]
+                                                  'products':collect_products_from_shopAPIs()['CONSUMER_MBB']
+                                                  #'products':[]
                                                 }                                        
 
                                         }
@@ -29,19 +29,19 @@ tree =  {
                         'Device Type':{
                                             'Mobile':{'entry_point':'',
                                                   'plans':None,
-                                                  #'products':collect_products_from_shopAPIs()['PREPAID_MOBILE']
-                                                  'products':[]
+                                                  'products':collect_products_from_shopAPIs()['PREPAID_MOBILE']
+                                                  #'products':[]
                                                   },
                                             'Tablet':{'entry_point':'',
                                                   'plans':None,
-                                                  #'products':collect_products_from_shopAPIs()['PREPAID_TABLET']
-                                                  'products':[]
+                                                  'products':collect_products_from_shopAPIs()['PREPAID_TABLET']
+                                                  #'products':[]
                                                   },
 
                                             'Mbb':{'entry_point':'',
                                                   'plans':None,
-                                                  #'products':collect_products_from_shopAPIs()['PREPAID_MBB']
-                                                  'products':[]
+                                                  'products':collect_products_from_shopAPIs()['PREPAID_MBB']
+                                                  #'products':[]
                                                   }
                         }
                       },
@@ -51,8 +51,8 @@ tree =  {
                         'Device Type':{
                                         'SIMs':{'entry_point':'',
                                                 'plans':None,
-                                                #'products':collect_products_from_shopAPIs()['BOOST']
-                                                'products':[]
+                                                'products':collect_products_from_shopAPIs()['BOOST']
+                                                #'products':[]
                                                 }
                         }
                     },
