@@ -45,7 +45,7 @@ async def gather_tasks():
 def collect_products_from_shopAPIs() -> dict:
     #results_dicts = asyncio.run(gather_tasks())
     
-    ####################################
+    #####################################
     shops = asdict(PublicAPIs())
     results_dicts = []
     for key in shops:
