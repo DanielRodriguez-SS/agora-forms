@@ -125,13 +125,13 @@ if product_name and category and sub_category and color and hex_code:
                 image_data_900x1200['Name'].append(product_name)
                 image_data_900x1200['Size'].append('900x1200')
                 image_data_900x1200['Hex Color'].append(hex_code)
-                image_data_900x1200['Url'].append(f'{REPO_1}{category}/{sub_category}/{color}/{file.name}')
+                image_data_900x1200['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
 
             else:
                 image_data_1200x900['Name'].append(product_name)
                 image_data_1200x900['Size'].append('1200x900')
                 image_data_1200x900['Hex Color'].append(hex_code)
-                image_data_1200x900['Url'].append(f'{REPO_1}{category}/{sub_category}/{color}/{file.name}')
+                image_data_1200x900['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
 
         temp_image_data = {
             "Name":image_data_800x800['Name']+image_data_900x1200['Name']+image_data_1200x900['Name'],
