@@ -27,18 +27,21 @@ REPO_1 = "https://www.telstra.com.au/content/dam/tcom/lego/2022/accessories/prod
 REPO_2 = "https://www.telstra.com.au/content/dam/tcom/devices/general/hardware/"
 
 image_data_800x800 = {
+    "SKU":[],
     "Name":[],
     "Size":[],
     "Hex Color":[],
     "Url":[]
 }
 image_data_900x1200 = {
+    "SKU":[],
     "Name":[],
     "Size":[],
     "Hex Color":[],
     "Url":[]
 }
 image_data_1200x900 = {
+    "SKU":[],
     "Name":[],
     "Size":[],
     "Hex Color":[],
