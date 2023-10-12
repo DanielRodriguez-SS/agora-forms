@@ -2,6 +2,8 @@ import streamlit as st
 import frontend.styling as css
 import pandas as pd
 import io
+import streamlit.components.v1 as components
+
 
 @st.cache_data
 def export_excel(dataFrame:pd.DataFrame) -> bytes:
@@ -9,6 +11,26 @@ def export_excel(dataFrame:pd.DataFrame) -> bytes:
     with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
         dataFrame.to_excel(writer, index=False)
     return buffer.getvalue()
+
+
+
+def run_javaScript():
+    # st.markdown(f'''<script>window.open("https://www.google.com", "_blank");</script>''',unsafe_allow_html=True)
+    # my_js = f'''<script>window.open("https://www.google.com", "_blank");</script>'''
+    # components.html(my_js)
+    # components.html(my_js)
+    
+    # components.iframe("https://docs.streamlit.io/en/latest")
+    for product in st.session_state.images_data:
+        # st.write(product)
+        urls = product['Url']
+        # st.write(urls)
+        for url in urls:
+            # st.write(url)
+            if url != '':
+                components.html(f'''<script>window.open("{url}", "_blank");</script>''')
+        
+
 
 
 st.set_page_config(page_title="Tools | ForDesigners",
@@ -107,7 +129,7 @@ with col_inputs:
     product_sku = st.text_input('Product SKU', placeholder='100252286')
     product_name = st.text_input('Product Name', placeholder='Sprout-AudioPlus TWS Earbuds-Black')
     category = st.text_input('Category', placeholder='earbuds')
-    sub_category = st.text_input('Sub-Category', placeholder='ghdwerb-saptw')
+    sub_category = st.text_input('Sub-Category (EPC Code)', placeholder='ghdwerb-saptw')
     color = st.text_input('Color', placeholder='black')
     hex_code = st.text_input('Hexcode', placeholder='#000000')
 
@@ -150,7 +172,7 @@ if product_sku and product_name and category and sub_category and color and hex_
                 image_data_1200x900['Url'].append(f'{REPO_1}{category}/{sub_category}/{color}/{file.name}')
 
         temp_image_data = {
-            "SKU":[image_data_800x800['Name'][0]]+image_data_800x800['SKU']+image_data_900x1200['SKU']+image_data_1200x900['SKU'],
+            "SKU":['']+image_data_800x800['SKU']+image_data_900x1200['SKU']+image_data_1200x900['SKU'],
             "Name":['']+image_data_800x800['Name']+image_data_900x1200['Name']+image_data_1200x900['Name'],
             "Size":['']+image_data_800x800['Size']+image_data_900x1200['Size']+image_data_1200x900['Size'],
             "Color":['']+image_data_800x800['Color']+image_data_900x1200['Color']+image_data_1200x900['Color'],
@@ -184,8 +206,8 @@ with col_outputs:
 
         excel_file_name = st.text_input('File Name:', placeholder='MyURLs')    
         if bool(excel_file_name):
-
             data_to_export = export_excel(df_to_export)
+            # tets_links = st.button('Test URLs', on_click=run_javaScript)
             st.download_button(
                 label="Export .xlsx",
                 data=data_to_export,
