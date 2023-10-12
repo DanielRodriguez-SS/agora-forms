@@ -4,14 +4,12 @@ import pandas as pd
 import io
 import streamlit.components.v1 as components
 
-
 @st.cache_data
 def export_excel(dataFrame:pd.DataFrame) -> bytes:
     buffer = io.BytesIO()
     with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
         dataFrame.to_excel(writer, index=False)
     return buffer.getvalue()
-
 
 
 def run_javaScript():
@@ -28,8 +26,7 @@ def run_javaScript():
         for url in urls:
             # st.write(url)
             if url != '':
-                components.html(f'''<script>window.open("{url}", "_blank");</script>''')
-        
+                components.html(f'''<script>window.open("{url}", "_blank");</script>''')        
 
 
 
@@ -42,6 +39,8 @@ if 'images_data' not in st.session_state:
 
 if 'file_uploader_key' not in st.session_state:
     st.session_state.file_uploader_key = 100
+
+
 
 # Only for 800X800 Images
 REPO_1 = "https://www.telstra.com.au/content/dam/tcom/lego/2022/accessories/products/"
@@ -181,6 +180,8 @@ if product_sku and product_name and category and sub_category and color and hex_
         }
         save = st.button('Save', on_click=add_product_images, args=[temp_image_data])
 
+
+
 with col_outputs:
     number_of_products_saved = len(st.session_state.images_data)
     st.write(f'Products Saved: {number_of_products_saved}')
@@ -207,9 +208,11 @@ with col_outputs:
         excel_file_name = st.text_input('File Name:', placeholder='MyURLs')    
         if bool(excel_file_name):
             data_to_export = export_excel(df_to_export)
-            # tets_links = st.button('Test URLs', on_click=run_javaScript)
+            tets_links = st.button('Test URLs', on_click=run_javaScript)
             st.download_button(
                 label="Export .xlsx",
                 data=data_to_export,
                 file_name=f'{excel_file_name}.xlsx'
             )
+
+
