@@ -161,7 +161,7 @@ if product_sku and product_name and category and sub_category and color and hex_
                 image_data_900x1200['Size'].append('900x1200')
                 image_data_800x800['Color'].append(color)
                 image_data_900x1200['Hex Color'].append(hex_code)
-                image_data_900x1200['Url'].append(f'{REPO_1}{category}/{sub_category}/{color}/{file.name}')
+                image_data_900x1200['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
 
             else:
                 image_data_800x800['SKU'].append(product_sku)
@@ -169,15 +169,17 @@ if product_sku and product_name and category and sub_category and color and hex_
                 image_data_1200x900['Size'].append('1200x900')
                 image_data_800x800['Color'].append(color)
                 image_data_1200x900['Hex Color'].append(hex_code)
-                image_data_1200x900['Url'].append(f'{REPO_1}{category}/{sub_category}/{color}/{file.name}')
+                image_data_1200x900['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
 
         temp_image_data = {
+
             "SKU":['']+image_data_800x800['SKU']+image_data_900x1200['SKU']+image_data_1200x900['SKU'],
             "Name":['']+image_data_800x800['Name']+image_data_900x1200['Name']+image_data_1200x900['Name'],
             "Size":['']+image_data_800x800['Size']+image_data_900x1200['Size']+image_data_1200x900['Size'],
             "Color":['']+image_data_800x800['Color']+image_data_900x1200['Color']+image_data_1200x900['Color'],
             'Hex Color':['']+image_data_800x800['Hex Color']+image_data_900x1200['Hex Color']+image_data_1200x900['Hex Color'],
             'Url':['']+image_data_800x800['Url']+image_data_900x1200['Url']+image_data_1200x900['Url']
+
         }
         save = st.button('Save', on_click=add_product_images, args=[temp_image_data])
 
