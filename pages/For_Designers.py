@@ -2,6 +2,8 @@ import streamlit as st
 import frontend.styling as css
 import pandas as pd
 import io
+import streamlit.components.v1 as components
+
 
 @st.cache_data
 def export_excel(dataFrame:pd.DataFrame) -> bytes:
@@ -9,6 +11,26 @@ def export_excel(dataFrame:pd.DataFrame) -> bytes:
     with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
         dataFrame.to_excel(writer, index=False)
     return buffer.getvalue()
+
+
+
+def run_javaScript():
+    # st.markdown(f'''<script>window.open("https://www.google.com", "_blank");</script>''',unsafe_allow_html=True)
+    # my_js = f'''<script>window.open("https://www.google.com", "_blank");</script>'''
+    # components.html(my_js)
+    # components.html(my_js)
+    
+    # components.iframe("https://docs.streamlit.io/en/latest")
+    for product in st.session_state.images_data:
+        # st.write(product)
+        urls = product['Url']
+        # st.write(urls)
+        for url in urls:
+            # st.write(url)
+            if url != '':
+                components.html(f'''<script>window.open("{url}", "_blank");</script>''')
+        
+
 
 
 st.set_page_config(page_title="Tools | ForDesigners",
@@ -30,6 +52,7 @@ image_data_800x800 = {
     "SKU":[],
     "Name":[],
     "Size":[],
+    "Color":[],
     "Hex Color":[],
     "Url":[]
 }
@@ -37,6 +60,7 @@ image_data_900x1200 = {
     "SKU":[],
     "Name":[],
     "Size":[],
+    "Color":[],
     "Hex Color":[],
     "Url":[]
 }
@@ -44,12 +68,15 @@ image_data_1200x900 = {
     "SKU":[],
     "Name":[],
     "Size":[],
+    "Color":[],
     "Hex Color":[],
     "Url":[]
 }
 products_images = []
 
-st.markdown("<h1>Images URLs Builder</h1>",unsafe_allow_html=True)
+st.markdown("<h1>🦾 Let's Automate The DAM Thing</h1>",unsafe_allow_html=True)
+st.markdown("<h3>Images URLs Builder</h3>",unsafe_allow_html=True)
+
 with st.expander("Need Help?"):
     col1, col2 = st.columns([1,1],gap="medium")
     with col1:
@@ -99,15 +126,16 @@ with st.expander("Need Help?"):
 col_inputs, col_outputs = st.columns([1,1], gap="medium")
 
 with col_inputs:
-    product_sku  = st.text_input('Product SKU', placeholder='100252286')
+    product_sku = st.text_input('Product SKU', placeholder='100252286')
     product_name = st.text_input('Product Name', placeholder='Sprout-AudioPlus TWS Earbuds-Black')
     category = st.text_input('Category', placeholder='earbuds')
-    sub_category = st.text_input('Sub-Category', placeholder='ghdwerb-saptw')
+    sub_category = st.text_input('Sub-Category (EPC Code)', placeholder='ghdwerb-saptw')
     color = st.text_input('Color', placeholder='black')
     hex_code = st.text_input('Hexcode', placeholder='#000000')
 
 
 def add_product_images(temp_images_data):
+    #st.session_state.images_data.append({'SKU':[''],'Name':[''],'Size':[''],'Color':[''],'Hex Color':[''],'Url':['']})
     st.session_state.images_data.append(temp_images_data)
     st.session_state.file_uploader_key +=1
     
@@ -123,6 +151,7 @@ if product_sku and product_name and category and sub_category and color and hex_
                 image_data_800x800['SKU'].append(product_sku)
                 image_data_800x800['Name'].append(product_name)
                 image_data_800x800['Size'].append('800x800')
+                image_data_800x800['Color'].append(color)
                 image_data_800x800['Hex Color'].append(hex_code)
                 image_data_800x800['Url'].append(f'{REPO_1}{category}/{sub_category}/{color}/{file.name}')
 
@@ -130,6 +159,7 @@ if product_sku and product_name and category and sub_category and color and hex_
                 image_data_800x800['SKU'].append(product_sku)
                 image_data_900x1200['Name'].append(product_name)
                 image_data_900x1200['Size'].append('900x1200')
+                image_data_800x800['Color'].append(color)
                 image_data_900x1200['Hex Color'].append(hex_code)
                 image_data_900x1200['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
 
@@ -137,15 +167,19 @@ if product_sku and product_name and category and sub_category and color and hex_
                 image_data_800x800['SKU'].append(product_sku)
                 image_data_1200x900['Name'].append(product_name)
                 image_data_1200x900['Size'].append('1200x900')
+                image_data_800x800['Color'].append(color)
                 image_data_1200x900['Hex Color'].append(hex_code)
                 image_data_1200x900['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
 
         temp_image_data = {
-            "SKU": image_data_800x800['SKU']+image_data_900x1200['SKU']+image_data_1200x900['SKU'],
-            "Name":image_data_800x800['Name']+image_data_900x1200['Name']+image_data_1200x900['Name'],
-            "Size":image_data_800x800['Size']+image_data_900x1200['Size']+image_data_1200x900['Size'],
-            'Hex Color': image_data_800x800['Hex Color']+image_data_900x1200['Hex Color']+image_data_1200x900['Hex Color'],
-            'Url': image_data_800x800['Url']+image_data_900x1200['Url']+image_data_1200x900['Url']
+
+            "SKU":['']+image_data_800x800['SKU']+image_data_900x1200['SKU']+image_data_1200x900['SKU'],
+            "Name":['']+image_data_800x800['Name']+image_data_900x1200['Name']+image_data_1200x900['Name'],
+            "Size":['']+image_data_800x800['Size']+image_data_900x1200['Size']+image_data_1200x900['Size'],
+            "Color":['']+image_data_800x800['Color']+image_data_900x1200['Color']+image_data_1200x900['Color'],
+            'Hex Color':['']+image_data_800x800['Hex Color']+image_data_900x1200['Hex Color']+image_data_1200x900['Hex Color'],
+            'Url':['']+image_data_800x800['Url']+image_data_900x1200['Url']+image_data_1200x900['Url']
+
         }
         save = st.button('Save', on_click=add_product_images, args=[temp_image_data])
 
@@ -154,11 +188,9 @@ with col_outputs:
     st.write(f'Products Saved: {number_of_products_saved}')
     col_product_name, col_deleteButton = st.columns([1,1],gap="small")
 
-
-    
     for item in range(number_of_products_saved):
         with col_product_name:
-            st.write(st.session_state.images_data[item]["Name"][0])
+            st.write(st.session_state.images_data[item]["Name"][1])
         with col_deleteButton:
             st.button('Delete',key=item, on_click=delete_product, args=[item])
     
@@ -173,11 +205,13 @@ with col_outputs:
             
         else:
             df_to_export = pd.DataFrame.from_dict(st.session_state.images_data[0])
-            
-        data_to_export = export_excel(df_to_export)
-        st.download_button(
-            label="Export .xlsx",
-            data=data_to_export,
-            file_name='Urls_Images.xlsx'
-            
-        )
+
+        excel_file_name = st.text_input('File Name:', placeholder='MyURLs')    
+        if bool(excel_file_name):
+            data_to_export = export_excel(df_to_export)
+            # tets_links = st.button('Test URLs', on_click=run_javaScript)
+            st.download_button(
+                label="Export .xlsx",
+                data=data_to_export,
+                file_name=f'{excel_file_name}.xlsx'
+            )
