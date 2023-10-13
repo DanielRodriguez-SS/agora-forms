@@ -23,7 +23,7 @@ with st.sidebar:
 st.markdown("<h1>🦾 Let's Automate The DAM Thing</h1>",unsafe_allow_html=True)
 st.markdown("<h3>Images URLs Builder</h3>",unsafe_allow_html=True)
 help_hint.display_help()
-segment = st.selectbox('Segment',['Accessories','Mobility'])
+segment = st.selectbox('Segment',['Accessories','Mobility','Prepaid'])
 
 col_inputs, col_outputs = st.columns([1,1], gap="medium")
 
@@ -46,7 +46,7 @@ if product_sku and product_name and category and sub_category and color and hex_
                                                                      sub_category,
                                                                      color,
                                                                      hex_code)
-        else:
+        elif segment == 'Mobility':
             temp_image_data = feature.process_images_names_for_mobility(files,
                                                                      product_sku,
                                                                      product_name,
@@ -54,6 +54,15 @@ if product_sku and product_name and category and sub_category and color and hex_
                                                                      sub_category,
                                                                      color,
                                                                      hex_code)
+        else:
+            temp_image_data = feature.process_images_names_for_prepaid(files,
+                                                                     product_sku,
+                                                                     product_name,
+                                                                     category,
+                                                                     sub_category,
+                                                                     color,
+                                                                     hex_code)
+
         st.button('Save', on_click=feature.add_product_images, args=[temp_image_data])
 
 with col_outputs:

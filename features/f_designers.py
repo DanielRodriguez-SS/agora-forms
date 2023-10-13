@@ -233,7 +233,7 @@ def process_images_names_for_prepaid(files:list,product_sku,product_name,categor
             image_data_900x1200['Name'].append(product_name)
             image_data_900x1200['Color'].append(color)
             image_data_900x1200['Hex Color'].append(hex_code)
-            image_data_900x1200['Url'].append(f'{data.REPO_4}{category}/{sub_category}/{color}/{file.name}')
+            image_data_900x1200['Url'].append(f'{data.REPO_3}{file.name}')
         else:
             image_data_1200x900['Size'].append('1200x900')
             image_data_1200x900['SKU'].append(product_sku)
@@ -242,7 +242,7 @@ def process_images_names_for_prepaid(files:list,product_sku,product_name,categor
             image_data_1200x900['Name'].append(product_name)
             image_data_1200x900['Color'].append(color)
             image_data_1200x900['Hex Color'].append(hex_code)
-            image_data_1200x900['Url'].append(f'{data.REPO_4}{category}/{sub_category}/{color}/{file.name}')
+            image_data_1200x900['Url'].append(f'{data.REPO_3}{file.name}')
     temp_image_data = {
         "Size":['']+image_data_270x530['Size']+image_data_800x800['Size']+image_data_900x1200['Size']+image_data_1200x900['Size'],
         "Category":['']+image_data_270x530['Category']+image_data_800x800['Category']+image_data_900x1200['Category']+image_data_1200x900['Category'],
@@ -254,7 +254,6 @@ def process_images_names_for_prepaid(files:list,product_sku,product_name,categor
         'Url':['']+image_data_270x530['Url']+image_data_800x800['Url']+image_data_900x1200['Url']+image_data_1200x900['Url']
     }
     return temp_image_data
-
 
 def add_product_images(temp_images_data):
     st.session_state.images_data.append(temp_images_data)
