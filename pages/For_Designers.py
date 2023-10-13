@@ -1,38 +1,9 @@
 import streamlit as st
 import frontend.styling as css
+import frontend.help.for_designers_page as help_hint
+import features.f_designers as feature
+import data.d_designers as data
 import pandas as pd
-import io
-import streamlit.components.v1 as components
-
-@st.cache_data
-def export_excel(dataFrame:pd.DataFrame) -> bytes:
-    buffer = io.BytesIO()
-    with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
-        dataFrame.to_excel(writer, index=False)
-    return buffer.getvalue()
-
-
-def run_javaScript():
-    # st.markdown(f'''<script>window.open("https://www.google.com", "_blank");</script>''',unsafe_allow_html=True)
-    # my_js = f'''<script>window.open("https://www.google.com", "_blank");</script>'''
-    # components.html(my_js)
-    # components.html(my_js)
-    
-    # components.iframe("https://docs.streamlit.io/en/latest")
-    for product in st.session_state.images_data:
-        # st.write(product)
-        urls = product['Url']
-        # st.write(urls)
-        for url in urls:
-            # st.write(url)
-            if url != '':
-                components.html(f'''<script>window.open("{url}", "_blank");</script>''')        
-
-
-
-st.set_page_config(page_title="Tools | ForDesigners",
-                       page_icon="🧊",layout="wide")
-css.hide_streamlit_defualt_menu_footer()
 
 if 'images_data' not in st.session_state:
     st.session_state.images_data = []
@@ -40,87 +11,19 @@ if 'images_data' not in st.session_state:
 if 'file_uploader_key' not in st.session_state:
     st.session_state.file_uploader_key = 100
 
+st.set_page_config(page_title="Tools | ForDesigners",
+                       page_icon="🧊",layout="wide")
+css.hide_streamlit_defualt_menu_footer()
 
-
-# Only for 800X800 Images
-REPO_1 = "https://www.telstra.com.au/content/dam/tcom/lego/2022/accessories/products/"
-# Other Images Sizes
-REPO_2 = "https://www.telstra.com.au/content/dam/tcom/devices/general/hardware/"
-
-image_data_800x800 = {
-    "SKU":[],
-    "Name":[],
-    "Size":[],
-    "Color":[],
-    "Hex Color":[],
-    "Url":[]
-}
-image_data_900x1200 = {
-    "SKU":[],
-    "Name":[],
-    "Size":[],
-    "Color":[],
-    "Hex Color":[],
-    "Url":[]
-}
-image_data_1200x900 = {
-    "SKU":[],
-    "Name":[],
-    "Size":[],
-    "Color":[],
-    "Hex Color":[],
-    "Url":[]
-}
-products_images = []
+# Define side bar menu
+with st.sidebar:
+    if st.button('Reset'):
+        st.rerun()
 
 st.markdown("<h1>🦾 Let's Automate The DAM Thing</h1>",unsafe_allow_html=True)
 st.markdown("<h3>Images URLs Builder</h3>",unsafe_allow_html=True)
-
-with st.expander("Need Help?"):
-    col1, col2 = st.columns([1,1],gap="medium")
-    with col1:
-        st.markdown("""<div style="background-color:rgb(239,48,57);height:1.5rem;width:1.5rem;border-radius:50%;text-align:center;margin-bottom:.5rem;margin-top:.5rem;">1</div>""", unsafe_allow_html=True)
-
-        st.markdown('''
-                    :orange[Product Name:] Type the name of the product for images you want to create links for.
-                    ''')
-        st.divider()
-        st.markdown('''
-                    :orange[Category:] This one needs to match with the category on the :blue[*repo*] dir where you will be uploading images.\n
-                    * For AGORA :blue[repo]: /content/dam/tcom/lego/2022/accessories/products/:red[category]/
-                    * For Non-AGORA :blue[repo]: /content/dam/tcom/devices/general/hardware/:red[category]/
-                    ''')
-        st.divider()
-        st.markdown('''
-                    :orange[Sub-Category:] This should align with a general name for the product excluding its color.\n
-                    * For AGORA :blue[repo]: /content/dam/tcom/lego/2022/accessories/products/category/:red[sub-category]/
-                    * For Non-AGORA :blue[repo]: /content/dam/tcom/devices/general/hardware/category/:red[sub-category]/
-                    ''')
-        st.divider()
-        st.markdown('''
-                    :orange[Color:] This should align with the product's color.\n
-                    * For AGORA :blue[repo]: /content/dam/tcom/lego/2022/accessories/products/category/sub-category/:red[color]/
-                    * For Non-AGORA :blue[repo]: /content/dam/tcom/devices/general/hardware/category/sub-category/:red[color]/
-                    ''')
-        st.divider()
-        st.markdown('''
-                    :orange[Hexcode:] Type the color of product on Hexadicimal and hit ENTER
-                    ''')
-
-    with col2:
-        st.markdown("""<div style="background-color:rgb(239,48,57);height:1.5rem;width:1.5rem;border-radius:50%;text-align:center;margin-bottom:.5rem;margin-top:.5rem;">2</div>""", unsafe_allow_html=True)
-        st.markdown('''
-                    :orange[Select all images:] Once "Browse files" appear, click on it and select all images you have for that product, for AGORA and Non-AGORA :blue[repo] all combined.
-            ''')
-        st.image('select_files.png')
-        st.divider()
-        st.markdown('''
-                    :orange[Save:] Once all files are uploaded clicl on Save and repeat the process from step 1 to add as many products you need.
-                ''')
-        st.divider()
-        st.markdown('''
-                    :orange[Export .xlsx:] When you have saved all products, next click on "Export .xlsx".
-                ''')
+help_hint.display_help()
+segment = st.selectbox('Segment',['Accessories','Mobility','Prepaid'])
 
 col_inputs, col_outputs = st.columns([1,1], gap="medium")
 
@@ -132,69 +35,47 @@ with col_inputs:
     color = st.text_input('Color', placeholder='black')
     hex_code = st.text_input('Hexcode', placeholder='#000000')
 
-
-def add_product_images(temp_images_data):
-    #st.session_state.images_data.append({'SKU':[''],'Name':[''],'Size':[''],'Color':[''],'Hex Color':[''],'Url':['']})
-    st.session_state.images_data.append(temp_images_data)
-    st.session_state.file_uploader_key +=1
-    
-
-def delete_product(item):
-    st.session_state.images_data.pop(item)
-
 if product_sku and product_name and category and sub_category and color and hex_code:
     files = col_inputs.file_uploader('Slect all images', key=st.session_state.file_uploader_key, accept_multiple_files=True)
     if files:
-        for file in files:
-            if '800x800' in file.name:
-                image_data_800x800['SKU'].append(product_sku)
-                image_data_800x800['Name'].append(product_name)
-                image_data_800x800['Size'].append('800x800')
-                image_data_800x800['Color'].append(color)
-                image_data_800x800['Hex Color'].append(hex_code)
-                image_data_800x800['Url'].append(f'{REPO_1}{category}/{sub_category}/{color}/{file.name}')
+        if segment == 'Accessories':
+            temp_image_data = feature.process_images_names_for_acc_tplus(files,
+                                                                     product_sku,
+                                                                     product_name,
+                                                                     category,
+                                                                     sub_category,
+                                                                     color,
+                                                                     hex_code)
+        elif segment == 'Mobility':
+            temp_image_data = feature.process_images_names_for_mobility(files,
+                                                                     product_sku,
+                                                                     product_name,
+                                                                     category,
+                                                                     sub_category,
+                                                                     color,
+                                                                     hex_code)
+        else:
+            temp_image_data = feature.process_images_names_for_prepaid(files,
+                                                                     product_sku,
+                                                                     product_name,
+                                                                     category,
+                                                                     sub_category,
+                                                                     color,
+                                                                     hex_code)
 
-            elif 'landscape' not in file.name:
-                image_data_800x800['SKU'].append(product_sku)
-                image_data_900x1200['Name'].append(product_name)
-                image_data_900x1200['Size'].append('900x1200')
-                image_data_800x800['Color'].append(color)
-                image_data_900x1200['Hex Color'].append(hex_code)
-                image_data_900x1200['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
-
-            else:
-                image_data_800x800['SKU'].append(product_sku)
-                image_data_1200x900['Name'].append(product_name)
-                image_data_1200x900['Size'].append('1200x900')
-                image_data_800x800['Color'].append(color)
-                image_data_1200x900['Hex Color'].append(hex_code)
-                image_data_1200x900['Url'].append(f'{REPO_2}{category}/{sub_category}/{color}/{file.name}')
-
-        temp_image_data = {
-
-            "SKU":['']+image_data_800x800['SKU']+image_data_900x1200['SKU']+image_data_1200x900['SKU'],
-            "Name":['']+image_data_800x800['Name']+image_data_900x1200['Name']+image_data_1200x900['Name'],
-            "Size":['']+image_data_800x800['Size']+image_data_900x1200['Size']+image_data_1200x900['Size'],
-            "Color":['']+image_data_800x800['Color']+image_data_900x1200['Color']+image_data_1200x900['Color'],
-            'Hex Color':['']+image_data_800x800['Hex Color']+image_data_900x1200['Hex Color']+image_data_1200x900['Hex Color'],
-            'Url':['']+image_data_800x800['Url']+image_data_900x1200['Url']+image_data_1200x900['Url']
-
-        }
-        save = st.button('Save', on_click=add_product_images, args=[temp_image_data])
-
-
+        st.button('Save', on_click=feature.add_product_images, args=[temp_image_data])
 
 with col_outputs:
     number_of_products_saved = len(st.session_state.images_data)
     st.write(f'Products Saved: {number_of_products_saved}')
-    col_product_name, col_deleteButton = st.columns([1,1],gap="small")
-
+    col_product_name, col_testButton ,col_deleteButton = st.columns([1,1,1],gap="small")
     for item in range(number_of_products_saved):
         with col_product_name:
             st.write(st.session_state.images_data[item]["Name"][1])
+        with col_testButton:
+            st.button('Test URLs',key=f'testBt-{item}', on_click=feature.open_urls, args=[item])
         with col_deleteButton:
-            st.button('Delete',key=item, on_click=delete_product, args=[item])
-    
+            st.button('Delete',key=f'deletBt-{item}', on_click=feature.delete_product, args=[item])
     if number_of_products_saved != 0:
         st.divider()
         if number_of_products_saved > 1:
@@ -202,19 +83,14 @@ with col_outputs:
             for data_dict in st.session_state.images_data:
                 data_frames.append(pd.DataFrame.from_dict(data_dict))
             super_dataFrame = pd.concat(data_frames)
-            df_to_export = super_dataFrame
-            
+            df_to_export = super_dataFrame   
         else:
             df_to_export = pd.DataFrame.from_dict(st.session_state.images_data[0])
-
-        excel_file_name = st.text_input('File Name:', placeholder='MyURLs')    
+        excel_file_name = st.text_input('File Name',help='To export file, enter a name.', placeholder='MyURLs')    
         if bool(excel_file_name):
-            data_to_export = export_excel(df_to_export)
-            tets_links = st.button('Test URLs', on_click=run_javaScript)
+            data_to_export = feature.export_excel(df_to_export)
             st.download_button(
                 label="Export .xlsx",
                 data=data_to_export,
                 file_name=f'{excel_file_name}.xlsx'
             )
-
-
