@@ -115,42 +115,20 @@ with tab2:
 
             # Calculate the aspect ratio
             aspect_ratio = new_img.width / new_img.height
-            
             if canvas_width / canvas_height > aspect_ratio:
                 new_width = int(canvas_height * aspect_ratio)
                 new_height = canvas_height
             else:
                 new_width = canvas_width
                 new_height = int(canvas_width / aspect_ratio)
-
             new_img = new_img.resize((new_width,new_height))
-
-
-
             canvas = Image.new("RGB", (canvas_width, canvas_height), (255, 255, 255))
-                    # Calculate the position to paste the image on the canvas
+            # Calculate the position to paste the image on the canvas
             left = (canvas_width - new_width) // 2
             top = (canvas_height - new_height) // 2
-
             # Paste the original image onto the canvas
             canvas.paste(new_img, (left, top))
-            #width, height = img.size
-            # Calculate the aspect ratio
-            #aspect_ratio = width / height
-
-            #if new_width / new_height > aspect_ratio:
-            #    new_width = int(new_height * aspect_ratio)
-            #else:
-            #    new_height = int(new_width / aspect_ratio)
-            
-            #img.resize((new_width,new_height))
-            #img.thumbnail((new_width,new_height))
-            #output_bytes_io = BytesIO()
-            #img = img.convert("RGB")
-            #img.save(output_bytes_io, format='JPEG')
-            #img.save(output_bytes_io, format='PNG')
             output_bytes_io = BytesIO()
-            #new_img.save(output_bytes_io, format='JPEG')
             canvas.save(output_bytes_io, format='JPEG')
         st.download_button(
             label='Get Resized Image',
