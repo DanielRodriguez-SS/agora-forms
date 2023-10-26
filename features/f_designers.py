@@ -274,4 +274,3 @@ def export_excel(dataFrame:pd.DataFrame) -> bytes:
     with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
         dataFrame.to_excel(writer, index=False)
     return buffer.getvalue()
-
