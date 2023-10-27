@@ -103,7 +103,6 @@ with tab1:
                     file_name=f'{excel_file_name}.xlsx'
                 )
 with tab2:
-
     st.write('Selct sizes you need from original PNG')
     # Display Options to Resize Original Image
     size_800x800 = st.checkbox('800x800')
@@ -120,44 +119,22 @@ with tab2:
     # If Users Select any Size to Resize Image
     if size_options:
         # Display Uploader Widget to Allow User to Upload Original Image
-        original_image = st.file_uploader('Image file .png')
+        original_images = st.file_uploader('Image file .png',accept_multiple_files=True)
         # Display Button Action to Start Resizing Process
         resize = st.button('Resize My Image')
         # If File is  Uploaded and "Rezise My Images" Clicked
-        if original_image is not None and resize:
-            # Get the data on bytes from the file uploader widget
-            image_bytes = original_image.getvalue()
-            # Convert PNG Image to RGB Image and Set a White Background
-            with Image.open(BytesIO(image_bytes)) as img:
-                new_img =Image.new('RGB',img.size, (255,255,255))
-                new_img.paste(img, (0, 0), img)
+        if original_images is not None and resize:
+            # Create Images Files on Temp Folder
+            all_files = []
+            for image in original_images:
+                # Creates the Images and Returns a List With all File Names Created
+                file_names = feature.images_builder(image, size_options)
+                all_files += file_names
+            output_bytes_io = feature.zip_files(all_files)
 
-            for size in size_options:
-                print(size)
-                # Set Canvas Dimentions where New Image will be Pasted
-                canvas_width = size[0]
-                canvas_height = size[1]
-                # Calculate the aspect ratio
-                aspect_ratio = new_img.width / new_img.height
-                if canvas_width / canvas_height > aspect_ratio:
-                    new_width = int(canvas_height * aspect_ratio)
-                    new_height = canvas_height
-                else:
-                    new_width = canvas_width
-                    new_height = int(canvas_width / aspect_ratio)
-                new_img = new_img.resize((new_width,new_height))
-                canvas = Image.new("RGB", (canvas_width, canvas_height), (255, 255, 255))
-                # Calculate the position to paste the image on the canvas
-                left = (canvas_width - new_width) // 2
-                top = (canvas_height - new_height) // 2
-                # Paste the original image onto the canvas
-                canvas.paste(new_img, (left, top))
-                output_bytes_io = BytesIO()
-                canvas.save(f'temp/{str(canvas_width)}x{str(canvas_height)}.jpg', format='JPEG')
-                    #canvas.save(output_bytes_io, format='JPEG')
-                # st.download_button(
-                #     label='Get Resized Image',
-                #     data=output_bytes_io,
-                #     file_name=f'image_{canvas_width}x{canvas_height}.jpg'
-                # )
-      
+            st.download_button(
+            label='Download .zip',
+            data=output_bytes_io,
+            file_name=f'images.zip'
+            )
+            #feature.clean_temp_files(all_files)

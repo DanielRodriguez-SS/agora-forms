@@ -1,9 +1,13 @@
 import streamlit as st
-import io
 import pandas as pd
 import streamlit.components.v1 as components
 import data.d_designers as data
+from PIL import Image
+from io import BytesIO
+import zipfile
+import os
 
+# FEATURES FOR IMAGE URLs BUILDER TAB
 def process_images_names_for_acc_tplus(files:list,product_sku,product_name,category,sub_category,color,hex_code)->dict:
     image_data_800x800 = {
     "Size":[],
@@ -270,7 +274,59 @@ def open_urls(item):
              
 @st.cache_data
 def export_excel(dataFrame:pd.DataFrame) -> bytes:
-    buffer = io.BytesIO()
+    buffer = BytesIO()
     with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
         dataFrame.to_excel(writer, index=False)
     return buffer.getvalue()
+
+# FEATURES FOR IMAGES RESIZING TAB
+def images_builder(original_image, size_options:list)->list:
+    # Create a list to save the File names
+    file_names = []
+    # Get the data on bytes from the file uploader widget
+    image_bytes = original_image.getvalue()
+    # Get the First Character of the Original File Name
+    file_id = original_image.name[0]
+    # Convert PNG Image to RGB Image and Set a White Background
+    with Image.open(BytesIO(image_bytes)) as img:
+        new_img =Image.new('RGB',img.size, (255,255,255))
+        new_img.paste(img, (0, 0), img)
+    # Repeat Process for all Sizes Selected by User
+    for size in size_options:
+        # Set Canvas Dimentions where New Image will be Pasted
+        canvas_width = size[0]
+        canvas_height = size[1]
+        # Calculate the aspect ratio
+        aspect_ratio = new_img.width / new_img.height
+        if canvas_width / canvas_height > aspect_ratio:
+            new_width = int(canvas_height * aspect_ratio)
+            new_height = canvas_height
+        else:
+            new_width = canvas_width
+            new_height = int(canvas_width / aspect_ratio)
+        new_img = new_img.resize((new_width,new_height))
+        canvas = Image.new("RGB", (canvas_width, canvas_height), (255, 255, 255))
+        # Calculate the position to paste the image on the canvas
+        left = (canvas_width - new_width) // 2
+        top = (canvas_height - new_height) // 2
+        # Paste the original image onto the canvas
+        canvas.paste(new_img, (left, top))
+        file_name = f'temp/{file_id}_{str(canvas_width)}x{str(canvas_height)}.jpg'
+        file_names.append(file_name)
+        canvas.save(file_name, format='JPEG')
+    return file_names
+
+def clean_temp_files(files_names:list):
+    for file in files_names:
+        os.remove(file)
+
+def zip_files(files:list):
+    data_file_bytes = BytesIO()
+    with zipfile.ZipFile(data_file_bytes, 'w') as zipf:
+        for file_name in files:
+            zipf.write(file_name)
+    clean_temp_files(files)
+    return data_file_bytes
+
+
+    
