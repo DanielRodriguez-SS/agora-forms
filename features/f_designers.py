@@ -280,7 +280,7 @@ def export_excel(dataFrame:pd.DataFrame) -> bytes:
     return buffer.getvalue()
 
 # FEATURES FOR IMAGES RESIZING TAB
-def images_builder(original_image, size_options:list)->list:
+def images_builder(product_id,original_image, size_options:list)->list:
     # Create a list to save the File names
     file_names = []
     # Get the data on bytes from the file uploader widget
@@ -311,7 +311,7 @@ def images_builder(original_image, size_options:list)->list:
         top = (canvas_height - new_height) // 2
         # Paste the original image onto the canvas
         canvas.paste(new_img, (left, top))
-        file_name = f'temp/{file_id}_{str(canvas_width)}x{str(canvas_height)}.jpg'
+        file_name = f'temp/{product_id}-0{file_id}-{str(canvas_width)}x{str(canvas_height)}.jpg'
         file_names.append(file_name)
         canvas.save(file_name, format='JPEG')
     return file_names

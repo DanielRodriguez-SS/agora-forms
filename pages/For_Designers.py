@@ -103,6 +103,7 @@ with tab1:
                     file_name=f'{excel_file_name}.xlsx'
                 )
 with tab2:
+    product_id = st.text_input('Product Id (Optional):',placeholder='Obsidian_Black')
     st.write('Selct sizes you need from original PNG')
     # Display Options to Resize Original Image
     size_800x800 = st.checkbox('800x800')
@@ -119,22 +120,23 @@ with tab2:
     # If Users Select any Size to Resize Image
     if size_options:
         # Display Uploader Widget to Allow User to Upload Original Image
-        original_images = st.file_uploader('Image file .png',accept_multiple_files=True)
+        original_images = st.file_uploader('Image files .png',accept_multiple_files=True)
         # Display Button Action to Start Resizing Process
-        resize = st.button('Resize My Image')
+        resize = st.button('Convert')
         # If File is  Uploaded and "Rezise My Images" Clicked
         if original_images is not None and resize:
             # Create Images Files on Temp Folder
             all_files = []
+            # Repeat for each files Uploaded
             for image in original_images:
-                # Creates the Images and Returns a List With all File Names Created
-                file_names = feature.images_builder(image, size_options)
+                # Creates the Images on Temp folder and Returns a List With all File Names Created
+                file_names = feature.images_builder(product_id,image, size_options)
                 all_files += file_names
+            # Zip all files Created and Retun data bytes for .zip. then Removes all Temp files created
             output_bytes_io = feature.zip_files(all_files)
-
+            # Display Button To Download Zip File with Images
             st.download_button(
             label='Download .zip',
             data=output_bytes_io,
             file_name=f'images.zip'
             )
-            #feature.clean_temp_files(all_files)
