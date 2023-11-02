@@ -327,6 +327,3 @@ def zip_files(files:list):
             zipf.write(file_name)
     clean_temp_files(files)
     return data_file_bytes
-
-
-    
