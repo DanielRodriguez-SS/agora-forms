@@ -7,7 +7,7 @@ st.set_page_config(page_title="Tools | For Ops",
                        page_icon="🧊",layout="wide")
 css.hide_streamlit_defualt_menu_footer()
 
-st.markdown("<h1>🎛️ File Merger for Porduct Creation</h1>",unsafe_allow_html=True)
+st.markdown("<h1>🎛️ File Merger for Product Creation</h1>",unsafe_allow_html=True)
 
 uploader_1, uploader_2 = st.columns(2)    
 with uploader_1:
