@@ -71,18 +71,7 @@ if dv_file:
                 # Append the rest if the images into the same sku key
                 sku_images[sku].append(row['Url'])
 
-
-            # if sku not in product_dict['SKU']:
-            #     product_dict['SKU'].append(sku)
-            #     product_dict["Image URL"].append(row['Url'])
-            #     images_temp.append(row['Url'])
-            # else:
-            #     images_temp.append(row['Url'])
-        st.write(sku_images)
-
         for key in sku_images:
-            st.write(key)
-            st.write(len(sku_images[key]))
             product_dict['SKU'].append(key)
             product_dict['Family'].append("")
             product_dict['Brand'].append("")
@@ -126,7 +115,7 @@ if dv_file:
             product_dict['RO Loy'].append("")
             product_dict['Price Loy'].append("")
 
-        st.write(product_dict)
+        #st.write(product_dict)
         df_to_export = pd.DataFrame.from_dict(product_dict)
         data_to_export = feature.export_excel(df_to_export)
         st.download_button(
