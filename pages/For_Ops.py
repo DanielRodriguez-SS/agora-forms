@@ -20,13 +20,16 @@ if dv_file:
         # Get Excel into a DataFrame
         df_dv = pd.read_excel(dv_file)
         # Drop all Rows with None Value
-        df_dv = df_dv.dropna()
+        #st.write(df_dv)
+        #df_dv = df_dv.dropna()
         # Filer DataFrame by Columns
         df_dv:pd.DataFrame = df_dv.get(['SKU','Size','Url'])
         # Filter DataFrame by Values on Column
+        df_dv = df_dv.dropna()
+        #st.write(df_dv)
         df_for_accessories:pd.DataFrame = df_dv.loc[(df_dv['Size'].str.contains('800x800'))]
         df_for_accessories = df_for_accessories.reset_index(drop=True)
-        st.write(df_for_accessories)
+        #st.write(df_for_accessories)
         # Dictionary for new excel file creation
         product_dict = {
             'SKU':[],
@@ -70,7 +73,7 @@ if dv_file:
             else:
                 # Append the rest if the images into the same sku key
                 sku_images[sku].append(row['Url'])
-
+        #st.write(sku_images)
         for key in sku_images:
             product_dict['SKU'].append(key)
             product_dict['Family'].append("")
@@ -100,11 +103,11 @@ if dv_file:
                 product_dict['Image3'].append('')
 
             try:
-                product_dict['Image4'].append(sku_images[key][4])
+                product_dict['Image4'].append(sku_images[key][3])
             except:
                 product_dict['Image4'].append('')
             try:
-                product_dict['Image5'].append(sku_images[key][5])
+                product_dict['Image5'].append(sku_images[key][4])
             except:
                 product_dict['Image5'].append('')
             product_dict['Attributes'].append("")
