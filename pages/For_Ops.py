@@ -19,17 +19,13 @@ if dv_file:
     if st.button("Merge"):
         # Get Excel into a DataFrame
         df_dv = pd.read_excel(dv_file)
-        # Drop all Rows with None Value
-        #st.write(df_dv)
-        #df_dv = df_dv.dropna()
         # Filer DataFrame by Columns
         df_dv:pd.DataFrame = df_dv.get(['SKU','Size','Url'])
-        # Filter DataFrame by Values on Column
+        # Drop all Rows with None Value
         df_dv = df_dv.dropna()
-        #st.write(df_dv)
+        # Filter DataFrame by Values on Column
         df_for_accessories:pd.DataFrame = df_dv.loc[(df_dv['Size'].str.contains('800x800'))]
         df_for_accessories = df_for_accessories.reset_index(drop=True)
-        #st.write(df_for_accessories)
         # Dictionary for new excel file creation
         product_dict = {
             'SKU':[],
@@ -73,7 +69,6 @@ if dv_file:
             else:
                 # Append the rest if the images into the same sku key
                 sku_images[sku].append(row['Url'])
-        #st.write(sku_images)
         for key in sku_images:
             product_dict['SKU'].append(key)
             product_dict['Family'].append("")
@@ -118,7 +113,6 @@ if dv_file:
             product_dict['RO Loy'].append("")
             product_dict['Price Loy'].append("")
 
-        #st.write(product_dict)
         df_to_export = pd.DataFrame.from_dict(product_dict)
         data_to_export = feature.export_excel(df_to_export)
         st.download_button(
