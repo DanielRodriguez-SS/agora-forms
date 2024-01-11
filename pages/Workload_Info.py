@@ -1,8 +1,9 @@
 import streamlit as st
 import database as db
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, time
 import calendar
+import altair as alt
 #'''
 #Dynamic Tabs Creation Ref:
 #https://docs.kanaries.net/topics/Streamlit/streamlit-tabs
@@ -44,11 +45,17 @@ grouped_dfs = {}
 for (year,month,week), group in grouped:
     group = group.drop(columns=['Month', 'Year','Week'])
     grouped_dfs[f'{calendar.month_abbr[month]} {year} wk{week}'] = group
-    graph_dict[f'{calendar.month_abbr[month]} {year} - wk {week}'] = len(group)
+    graph_dict[f'{calendar.month_abbr[month]} {year} wk{week}'] = len(group)
 
 st.markdown(f'# Task Pipeline Forecast')
 st.markdown(f'{len(future_dates_df)} {plural_word(len(future_dates_df),'Ticket')}')
-st.bar_chart(graph_dict)
+
+
+# Convert data dictionary to a DataFrame
+graph_df = pd.DataFrame(list(graph_dict.items()), columns=['Week', 'Tickets'])
+chart = alt.Chart(graph_df).mark_bar(color='#ffaa0088').encode(x=alt.X('Week',sort=None,title='Week'),y='Tickets')
+st.altair_chart(chart, use_container_width=True)
+
 st.markdown('# Weekly Task Breakdown')
 tab_list = list(grouped_dfs)
 tabs = st.tabs(tab_list)
@@ -60,3 +67,15 @@ for df,tab in zip(grouped_dfs, tabs):
 
 st.markdown(f'# Work Queue Catalog')
 st.dataframe(future_dates_df, hide_index=True, use_container_width=True)
+
+data = {}
+data['Ticket #'] = st.text_input('Ticket')
+data['Summary'] = st.text_input('Summary')
+data['Epic'] = st.text_input('Epic')
+data['Due Date'] = datetime.combine(st.date_input('Due Date'),time(0,0))
+data['Notes'] = st.text_input('Notes')
+save = st.button('Save')
+if save:
+    db.insert_jira(client,data)
+    #print(type(data['Due Date']))
+    st.write('Record Saved')

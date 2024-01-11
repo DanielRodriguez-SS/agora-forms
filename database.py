@@ -20,3 +20,7 @@ def connect_to_db()->MongoClient:
 def get_collections_names(client:MongoClient, db:str)->list:
      collections_names = client[db].list_collection_names()
      return collections_names
+
+def insert_jira(client:MongoClient, data:dict):
+    jiras_collection = client['gtm_trading']['jiras']
+    jiras_collection.insert_one(data)
