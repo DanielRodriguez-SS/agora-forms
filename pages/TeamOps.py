@@ -139,7 +139,7 @@ save = st.button('Save')
 
 if save:
     if data['Ticket #'] or data['Summary'] or data['Epic'] or magic_pass:
-        if magic_pass == f'AgoraOps{datetime.now().strftime('%d%m%y')}':
+        if magic_pass == f'AgoraOps{datetime.now().strftime("%d%m%y")}':
             client = db.connect_to_db()
             is_exting_jira = db.find_jira(client,data={'Ticket #':data['Ticket #']})
             if not is_exting_jira:
