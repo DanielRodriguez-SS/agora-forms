@@ -64,9 +64,12 @@ def get_link_button(rgb_color:str)->str:
                color:rgb({rgb_color});"
             '''
 
-# dic_style = {
-#     NewCellValuesFor.IN_STOCK : get_colored_box('22, 112, 0','0.2'),
-#     NewCellValuesFor.OUT_STOCK : get_colored_box('249, 0, 8','0.1'),
-#     NewCellValuesFor.BACKORDER : get_colored_box('252, 148, 9','0.2'),
-#     NewCellValuesFor.INCONSISTENCY : get_colored_box('242, 210, 18','0.2')
-# }
+
+def box_style()->str:
+   return f'border-radius: 10px; padding: 1.5rem; background-color: blueviolet; color: whitesmoke; margin-top: 2rem;'
+
+def start_here_link(page:str, new_tab:bool=None)->str:
+   if new_tab:
+      return f'<a style="text-decoration: none;" href="{page}">Start Here ➔</a>'
+   else:
+      return f'<a style="text-decoration: none;" href="{page}" target="_self">Start Here ➔</a>'
