@@ -29,9 +29,9 @@ class PromoDetails:
     email_coms:str = '_NA'
 
 st.set_page_config(page_title="Forms | Promotions",
-                       page_icon="🧊")
+                       page_icon="🎛️")
 
-css.hide_streamlit_defualt_menu_footer()
+# css.hide_streamlit_defualt_menu_footer()
 st.markdown("<h1>Tell us more about your promotion</h1>",unsafe_allow_html=True)
 st.markdown("""<div style="background-color:rgb(239,48,57);height:1.5rem;width:1.5rem;border-radius:50%;text-align:center;margin-bottom:.5rem;margin-top:.5rem;">1</div>""", unsafe_allow_html=True)
 

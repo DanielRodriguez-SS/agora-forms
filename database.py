@@ -24,3 +24,7 @@ def get_collections_names(client:MongoClient, db:str)->list:
 def insert_jira(client:MongoClient, data:dict):
     jiras_collection = client['gtm_trading']['jiras']
     jiras_collection.insert_one(data)
+
+def find_jira(client:MongoClient, data:dict):
+    jiras_collection = client['gtm_trading']['jiras']
+    return jiras_collection.find_one(data)
