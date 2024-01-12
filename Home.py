@@ -3,7 +3,7 @@ import streamlit as st
 import frontend.styling as css
 st.set_page_config(page_title="Forms | Home",
                        page_icon="🧊",layout="wide")
-# css.hide_streamlit_defualt_menu_footer()
+
 st.markdown('# Welcome to AgoraOps Hub! 👋')
 st.markdown('''Welcome to our central hub, your go-to channel for seamless navigation through various
                functionalities. Here, you can effortlessly request promotions, explore new device builds,
