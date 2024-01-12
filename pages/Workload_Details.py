@@ -48,7 +48,7 @@ for (year,month,week), group in grouped:
     graph_dict[f'{calendar.month_abbr[month]} {year} wk{week}'] = len(group)
 
 st.markdown(f'# 📊 Task Pipeline Forecast')
-st.markdown(f'{len(future_dates_df)} {plural_word(len(future_dates_df),'Ticket')}')
+st.markdown(f'{len(future_dates_df)} {plural_word(len(future_dates_df),"Ticket")}')
 
 # Convert data dictionary to a DataFrame
 graph_df = pd.DataFrame(list(graph_dict.items()), columns=['Week', 'Tickets'])
