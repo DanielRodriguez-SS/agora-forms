@@ -144,7 +144,7 @@ if save:
             is_exting_jira = db.find_jira(client,data={'Ticket #':data['Ticket #']})
             if not is_exting_jira:
                 db.insert_jira(client,data)
-                st.toast(f'{data['Ticket #']} JIRA Added!', icon='👍')
+                st.toast(f'{data["Ticket #"]} JIRA Added!', icon='👍')
             else:
                 st.toast('JIRA Already Exists on Database', icon='🚫')
         else:
