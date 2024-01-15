@@ -63,7 +63,7 @@ tabs = st.tabs(tab_list)
 
 for df,tab in zip(grouped_dfs, tabs):
     with tab:
-        st.write(f'{len(grouped_dfs[df])} {plural_word(len(grouped_dfs[df]),'Ticket')}')
+        st.write(f'{len(grouped_dfs[df])} {plural_word(len(grouped_dfs[df]),"Ticket")}')
         st.dataframe(grouped_dfs[df],hide_index=True,use_container_width=True)
 
 st.markdown(f'# 📋 Work Queue Catalog')
