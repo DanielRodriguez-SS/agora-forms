@@ -1,14 +1,31 @@
 import streamlit as st
+from datetime import datetime
 # from data.column_names import NewCellValuesFor
 
-hide_menu_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
+
+
+
+# hide_menu_style = """
+#             <style>
+#             #MainMenu {visibility: hidden;}
+#             footer {visibility: hidden;}
+#             </style>
+#             """
+
+def set_footer():
+   footer = f'''
+            <footer style="background-color: rgb(16, 18, 22);color: rgb(69, 70, 76);text-align: right;padding: 10px;position: fixed;bottom: 0;border-top-left-radius: 15px;border-top-right-radius: 15px;z-index: 1000;">
+               <p>&copy; {datetime.now().strftime('%Y')} Daniel Rodriguez. All rights reserved.</p>
+            </footer>
+            '''
+   st.markdown(footer, unsafe_allow_html=True)
 
 def hide_streamlit_defualt_menu_footer():
+   hide_menu_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            </style>
+            """
    st.markdown(hide_menu_style, unsafe_allow_html=True)
    
 def get_colored_box(rgb_color:str, backgorund_tranparence:str)->str:

@@ -6,10 +6,11 @@ import database as db
 import features.f_designers as feature
 
 
-# st.set_page_config(page_title="Tools | For Ops",
-#                        page_icon="🧊",layout="wide")
-st.set_page_config(page_title="Tools | TeamOps",
+
+st.set_page_config(page_title="AgoraOps Hub | TeamOps",
                        page_icon="🎛️")
+css.hide_streamlit_defualt_menu_footer()
+css.set_footer()
 # css.hide_streamlit_defualt_menu_footer()
 
 # st.markdown("<h1>🎛️ File Merger for Porduct Creation</h1>",unsafe_allow_html=True)

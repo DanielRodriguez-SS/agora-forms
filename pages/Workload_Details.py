@@ -1,4 +1,5 @@
 import streamlit as st
+import frontend.styling as css
 import database as db
 import pandas as pd
 from datetime import datetime, time
@@ -8,9 +9,10 @@ import altair as alt
 #Dynamic Tabs Creation Ref:
 #https://docs.kanaries.net/topics/Streamlit/streamlit-tabs
 #'''
-st.set_page_config(page_title="AgoraOps | Workload Details",
+st.set_page_config(page_title="AgoraOps Hub | Workload Details",
                        page_icon="🎛️",layout="wide")
-
+css.hide_streamlit_defualt_menu_footer()
+css.set_footer()
 def plural_word(len_items:int,word:str) -> str:
     if len_items > 1:
         return f'{word}s'

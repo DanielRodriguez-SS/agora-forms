@@ -17,9 +17,10 @@ if 'images_data' not in st.session_state:
 if 'file_uploader_key' not in st.session_state:
     st.session_state.file_uploader_key = 100
 
-st.set_page_config(page_title="Tools | LinkCraft Pro",
+st.set_page_config(page_title="AgoraOps Hub | LinkCraft Pro",
                        page_icon="🎛️",layout="wide")
-# css.hide_streamlit_defualt_menu_footer()
+css.hide_streamlit_defualt_menu_footer()
+css.set_footer()
 
 # Define side bar menu
 with st.sidebar:
