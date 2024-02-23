@@ -1,16 +1,6 @@
 import streamlit as st
 from datetime import datetime
-# from data.column_names import NewCellValuesFor
 
-
-
-
-# hide_menu_style = """
-#             <style>
-#             #MainMenu {visibility: hidden;}
-#             footer {visibility: hidden;}
-#             </style>
-#             """
 
 def set_footer():
    footer = f'''
