@@ -18,7 +18,7 @@ json_content="{\"python.defaultInterpreterPath\": \"$python_interpreter_path\"}"
 # Check if the virtual enviroment already exists on working DIR
 if [ ! -d "$VENV_DIR" ]; then
     # Create a new virtual environment
-    python3 -m venv $VENV_DIR
+    python -m venv $VENV_DIR
     echo "👍\033[1;32m Virtual environment '$VENV_DIR' created.\033[0m"
     if [ ! -d "$VSCODE_DIR" ]; then
         mkdir "$VSCODE_DIR"
@@ -33,15 +33,27 @@ fi
 # Clear VIRTUAL_ENV varibale
 unset VIRTUAL_ENV
 # Activate virtual environment
-source $VENV_DIR/bin/activate
-
-# Check if the virtual environment is activated
-if [[ "$VIRTUAL_ENV" = "$PWD/$VENV_DIR" ]]; then
-    echo "👍\033[1;32m Virtual environment '$VENV_DIR' is activated.\033[0m"
+# Check if the 'activate' script exists in the specified locations
+if [ -f "$VENV_DIR/bin/activate" ]; then
+    source "$VENV_DIR/bin/activate"
+    pip install --upgrade pip
+    # Check if the virtual environment is activated
+    if [[ "$VIRTUAL_ENV" = "$PWD/$VENV_DIR" ]]; then
+        echo "👍\033[1;32m Virtual environment '$VENV_DIR' is activated.\033[0m"
+    else
+        echo "🤦‍♂️\033[1;31m Virtual environment activation failed or not detected.\033[0m"
+        exit 1
+    fi
+elif [ -f "$VENV_DIR/Scripts/activate" ]; then
+    source "$VENV_DIR/Scripts/activate"
+    pip install --upgrade pip
 else
-    echo "🤦‍♂️\033[1;31m Virtual environment activation failed or not detected.\033[0m"
-    exit 1
+    echo "Virtual environment activation script not found in the specified locations."
 fi
+
+# source $VENV_DIR/bin/activate
+
+
 
 # Check if there is a file with requirements for virtuall enviroment
 if [ -f "requirements.txt" ]; then
