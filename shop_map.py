@@ -2,7 +2,7 @@ from products_puller import collect_products_from_shopAPIs
 
 tree =  {
             'Postpaid':{
-                        'Segment':['Consumer','Small Business'],
+                        'Segment':['Consumer'],
                         'Customer Type':['New','Porting','Upgrade'],
                         'Device Type':{
                                         'Mobile':{'entry_point':'',
@@ -78,24 +78,5 @@ tree =  {
                                                             'products':['Netflix','Foxtel IQ4 Multiroom']
                                             }
                                           }
-                            },
-            'Small Business Fixed Services':{
-                            'Segment':None,
-                            'Customer Type':['New','Porting','Recontract'],
-                            'Device Type':{
-                                            'Internet':{'entry_point':'https://www.telstra.com.au/small-business/internet/5g-broadband-plans',
-                                                        'plans':['Ultimate Business Internet - $110','Ultimate Business Internet Premium - $140','5G Business Internet'],
-                                                        'products':['Telstra Smart modem - Professional installation','International Ultimate','Telstra Smart Wi-Fi Booster']
-                                            },
-                                            '5G':{'entry_point':'',
-                                                       'plans':['5G Business Internet'],
-                                                       'products':[]},
-                                            'Office Phone':{'entry_point':'https://www.telstra.com.au/small-business/office-phones',
-                                                        'plans':['Ultimate Business Voice - $55'],
-                                                        'products':['Telstra Smart modem - Professional installation','Business International Calling Pack']
-
-                                            }
-
-                                          }
-                            } 
+                            }
     }
