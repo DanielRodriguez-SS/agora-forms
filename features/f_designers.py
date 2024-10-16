@@ -318,6 +318,7 @@ def images_builder(product_id,original_image, size_options:list)->list:
 
 def clean_temp_files(files_names:list):
     for file in files_names:
+        #print(file)
         os.remove(file)
 
 def zip_files(files:list):
@@ -325,5 +326,5 @@ def zip_files(files:list):
     with zipfile.ZipFile(data_file_bytes, 'w') as zipf:
         for file_name in files:
             zipf.write(file_name)
-    clean_temp_files(files)
+    #clean_temp_files(files)
     return data_file_bytes
