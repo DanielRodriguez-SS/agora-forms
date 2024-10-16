@@ -104,41 +104,44 @@ with tab1:
                     file_name=f'{excel_file_name}.xlsx'
                 )
 with tab2:
-    product_id = st.text_input('Product Id (Optional):',placeholder='Obsidian_Black')
-    st.write('Selct sizes you need from original PNG')
-    # Display Options to Resize Original Image
-    size_800x800 = st.checkbox('800x800')
-    size_900x1200 = st.checkbox('900x1200')
-    size_1200x900 = st.checkbox('1200x900')
-    # Saving Options Sizes from User on List
-    size_options = []
-    if size_800x800:
-        size_options.append((800,800))
-    if size_900x1200:
-        size_options.append((900,1200))
-    if size_1200x900:
-        size_options.append((1200,900))
-    # If Users Select any Size to Resize Image
-    if size_options:
-        # Display Uploader Widget to Allow User to Upload Original Image
-        original_images = st.file_uploader('Image files .png',accept_multiple_files=True)
-        # If there are a Files Uploaded, Display Button Action to Start Resizing Process
-        if original_images:
-            resize = st.button('Convert')
-            # If File is  Uploaded and "Rezise My Images" Clicked
-            if original_images is not None and resize:
-                # Create Images Files on Temp Folder
-                all_files = []
-                # Repeat for each files Uploaded
-                for image in original_images:
-                    # Creates the Images on Temp folder and Returns a List With all File Names Created
-                    file_names = feature.images_builder(product_id,image, size_options)
-                    all_files += file_names
-                # Zip all files Created and Retun data bytes for .zip. then Removes all Temp files created
-                output_bytes_io = feature.zip_files(all_files)
-                # Display Button To Download Zip File with Images
-                st.download_button(
-                label='Download .zip',
-                data=output_bytes_io,
-                file_name=f'images.zip'
-                )
+    product_id = st.text_input('Product Id:',placeholder='Obsidian_Black')
+    if product_id:
+        st.write('Selct sizes you need from original PNG')
+        # Display Options to Resize Original Image
+        size_800x800 = st.checkbox('800x800')
+        size_900x1200 = st.checkbox('900x1200')
+        size_1200x900 = st.checkbox('1200x900')
+        # Saving Options Sizes from User on List
+        size_options = []
+        if size_800x800:
+            size_options.append((800,800))
+        if size_900x1200:
+            size_options.append((900,1200))
+        if size_1200x900:
+            size_options.append((1200,900))
+        # If Users Select any Size to Resize Image
+        if size_options:
+            # Display Uploader Widget to Allow User to Upload Original Image
+            original_images = st.file_uploader('Image files .png',accept_multiple_files=True)
+            # If there are a Files Uploaded, Display Button Action to Start Resizing Process
+            if original_images:
+                resize = st.button('Convert')
+                # If File is  Uploaded and "Rezise My Images" Clicked
+                if original_images is not None and resize:
+                    # Create Images Files on Temp Folder
+                    all_files = []
+                    # Repeat for each files Uploaded
+                    i=0
+                    for image in original_images:
+                        # Creates the Images on Temp folder and Returns a List With all File Names Created
+                        file_names = feature.images_builder(f'{product_id}-{i}',image, size_options)
+                        all_files += file_names
+                        i=i+1
+                    # Zip all files Created and Retun data bytes for .zip. then Removes all Temp files created
+                    output_bytes_io = feature.zip_files(all_files)
+                    # Display Button To Download Zip File with Images
+                    st.download_button(
+                    label='Download .zip',
+                    data=output_bytes_io,
+                    file_name=f'{product_id}.zip'
+                    )

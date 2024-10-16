@@ -311,7 +311,7 @@ def images_builder(product_id,original_image, size_options:list)->list:
         top = (canvas_height - new_height) // 2
         # Paste the original image onto the canvas
         canvas.paste(new_img, (left, top))
-        file_name = f'temp/{product_id}-0{file_id}-{str(canvas_width)}x{str(canvas_height)}.jpg'
+        file_name = f'temp/{product_id}-{str(canvas_width)}x{str(canvas_height)}.jpg'
         file_names.append(file_name)
         canvas.save(file_name, format='JPEG')
     return file_names
@@ -326,5 +326,5 @@ def zip_files(files:list):
     with zipfile.ZipFile(data_file_bytes, 'w') as zipf:
         for file_name in files:
             zipf.write(file_name)
-    #clean_temp_files(files)
+    clean_temp_files(files)
     return data_file_bytes
