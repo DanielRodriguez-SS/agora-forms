@@ -5,6 +5,7 @@ import features.f_designers as feature
 import pandas as pd
 from PIL import Image
 from io import BytesIO
+import os
 
 def resize_image(input_path, output_path, size):
     with Image.open(input_path) as img:
@@ -128,13 +129,14 @@ with tab2:
                 resize = st.button('Convert')
                 # If File is  Uploaded and "Rezise My Images" Clicked
                 if original_images is not None and resize:
+                    os.mkdir(product_id)
                     # Create Images Files on Temp Folder
                     all_files = []
                     # Repeat for each files Uploaded
                     i=0
                     for image in original_images:
                         # Creates the Images on Temp folder and Returns a List With all File Names Created
-                        file_names = feature.images_builder(f'{product_id}-{i}',image, size_options)
+                        file_names = feature.images_builder(product_id,i,image, size_options)
                         all_files += file_names
                         i=i+1
                     # Zip all files Created and Retun data bytes for .zip. then Removes all Temp files created

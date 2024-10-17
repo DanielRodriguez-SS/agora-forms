@@ -6,6 +6,7 @@ from PIL import Image
 from io import BytesIO
 import zipfile
 import os
+import shutil
 
 # FEATURES FOR IMAGE URLs BUILDER TAB
 def process_images_names_for_acc_tplus(files:list,product_sku,product_name,category,sub_category,color,hex_code)->dict:
@@ -280,7 +281,7 @@ def export_excel(dataFrame:pd.DataFrame) -> bytes:
     return buffer.getvalue()
 
 # FEATURES FOR IMAGES RESIZING TAB
-def images_builder(product_id,original_image, size_options:list)->list:
+def images_builder(product_id:str,image_index:int,original_image, size_options:list)->list:
     # Create a list to save the File names
     file_names = []
     # Get the data on bytes from the file uploader widget
@@ -311,14 +312,16 @@ def images_builder(product_id,original_image, size_options:list)->list:
         top = (canvas_height - new_height) // 2
         # Paste the original image onto the canvas
         canvas.paste(new_img, (left, top))
-        file_name = f'temp/{product_id}-{str(canvas_width)}x{str(canvas_height)}.jpg'
+        file_name = f'{product_id}/{product_id}-{image_index}-{str(canvas_width)}x{str(canvas_height)}.jpg'
         file_names.append(file_name)
         canvas.save(file_name, format='JPEG')
     return file_names
 
+def delete_folder(folder_path:str):
+    shutil.rmtree(folder_path)
+
 def clean_temp_files(files_names:list):
     for file in files_names:
-        #print(file)
         os.remove(file)
 
 def zip_files(files:list):
@@ -326,5 +329,6 @@ def zip_files(files:list):
     with zipfile.ZipFile(data_file_bytes, 'w') as zipf:
         for file_name in files:
             zipf.write(file_name)
-    clean_temp_files(files)
+ 
+    delete_folder( files[0].split("/")[0])
     return data_file_bytes
