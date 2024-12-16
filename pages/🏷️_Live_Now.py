@@ -35,11 +35,11 @@ get_live_promos(prepaid_mobile_data)
 
 st.markdown("<h3>Tablets</h2>", unsafe_allow_html=True)
 prepaid_table_data = reqease.Get(URL_PREPAID_TABLETS).to_dict
-get_live_promos(prepaid_table_data, "&deviceType=tablet")
+get_live_promos(prepaid_table_data, segment_parm="&deviceType=tablet")
 
 st.markdown("<h3>Mbb</h2>", unsafe_allow_html=True)
 prepaid_mbb_data = reqease.Get(URL_PREPAID_MBB).to_dict
-get_live_promos(prepaid_mbb_data, "&deviceType=mbb")
+get_live_promos(prepaid_mbb_data, segment_parm="&deviceType=mbb")
 
 st.markdown("<h2>Boost</h2>", unsafe_allow_html=True)
 boost_data = reqease.Get(URL_BOOST).to_dict
