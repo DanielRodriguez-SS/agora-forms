@@ -5,7 +5,7 @@ import reqease
 st.set_page_config(page_title="AgoraOps Hub | Rewards 🔍",
                        page_icon="🔍")
 css.hide_streamlit_defualt_menu_footer()
-css.set_footer()
+
 
 # change
 REWARDS_CONSUMER = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/products/loyalty_con'

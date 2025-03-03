@@ -31,7 +31,7 @@ class PromoDetails:
 st.set_page_config(page_title="AgoraOps Hub | Promotions",
                        page_icon="🎛️")
 css.hide_streamlit_defualt_menu_footer()
-css.set_footer()
+
 
 # css.hide_streamlit_defualt_menu_footer()
 st.markdown("<h1>Tell us more about your promotion</h1>",unsafe_allow_html=True)

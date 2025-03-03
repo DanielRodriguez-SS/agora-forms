@@ -12,12 +12,39 @@ import altair as alt
 st.set_page_config(page_title="AgoraOps Hub | Workload Details",
                        page_icon="🎛️",layout="wide")
 css.hide_streamlit_defualt_menu_footer()
-css.set_footer()
+
 def plural_word(len_items:int,word:str) -> str:
     if len_items > 1:
         return f'{word}s'
     else:
         return word
+
+with st.sidebar:
+    st.markdown('# 📝 JIRA Tickets Entry')
+    data = {}
+    data['Ticket #'] = st.text_input('Ticket #')
+    data['Summary'] = st.text_input('Summary')
+    data['Epic'] = st.text_input('Epic')
+    data['Due Date'] = datetime.combine(st.date_input('Due Date'),time(0,0))
+    data['Notes'] = st.text_input('Notes')
+    magic_pass = st.text_input(label='Magic Pass',type='password')
+    save = st.button('Save')
+    
+    
+    if save:
+        if data['Ticket #'] or data['Summary'] or data['Epic'] or magic_pass:
+            if magic_pass == f'AgoraOps{datetime.now().strftime("%d%m%y")}':
+                client = db.connect_to_db()
+                is_exting_jira = db.find_jira(client,data={'Ticket #':data['Ticket #']})
+                if not is_exting_jira:
+                    db.insert_jira(client,data)
+                    st.toast(f'{data["Ticket #"]} JIRA Added!', icon='👍')
+                else:
+                    st.toast('JIRA Already Exists on Database', icon='🚫')
+            else:
+                st.toast('Incorrect Magic Pass!', icon='🚫')
+        else:
+            st.toast('JIRA Details are missing!', icon='🚫')
 
 # Get client from DB connection
 client = db.connect_to_db()
