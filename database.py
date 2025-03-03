@@ -1,3 +1,4 @@
+import streamlit as st
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 """
@@ -6,7 +7,8 @@ https://pymongo.readthedocs.io/en/stable/tutorial.html
 """
 
 def connect_to_db()->MongoClient:
-    uri = "mongodb+srv://agoraops:ylLRaVhJuw0LmNNF@cluster0.av42zfn.mongodb.net/?retryWrites=true&w=majority"
+    uri = f"mongodb+srv://{st.secrets["database"]["user"]}:{st.secrets["database"]["password"]}@cluster0.av42zfn.mongodb.net/?retryWrites=true&w=majority"
+    #uri = "mongodb+srv://agoraops:ylLRaVhJuw0LmNNF@cluster0.av42zfn.mongodb.net/?retryWrites=true&w=majority"
     # Create a new client and connect to the server
     client = MongoClient(uri,tls=True,tlsAllowInvalidCertificates=True,server_api=ServerApi('1'))
     # Send a ping to confirm a successful connection
