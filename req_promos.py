@@ -28,13 +28,12 @@ class PromoDetails:
     end_time:str = '_NA'
     email_coms:str = '_NA'
 
-st.set_page_config(page_title="AgoraOps Hub | Promotions",
-                       page_icon="🎛️")
+st.set_page_config(page_title="AgoraOps Hub | Promotions", page_icon="🎛️")
 css.hide_streamlit_defualt_menu_footer()
 
 
 # css.hide_streamlit_defualt_menu_footer()
-st.markdown("<h1>Tell us more about your promotion</h1>",unsafe_allow_html=True)
+st.markdown("<h1>Tell us more about this new promotion</h1>",unsafe_allow_html=True)
 st.markdown("""<div style="background-color:rgb(239,48,57);height:1.5rem;width:1.5rem;border-radius:50%;text-align:center;margin-bottom:.5rem;margin-top:.5rem;">1</div>""", unsafe_allow_html=True)
 
 with st.spinner('Searching for available products in AGORA'):
@@ -44,41 +43,17 @@ product_info = ProductInfo()
 with st.expander("Product Information"):
     shop = st.selectbox("Shop:",shops)
     product_info.shop = shop
-    #st.write(tree[shop])
-    segments = tree[shop]['Segment']
     device_types:dict = tree[shop]['Device Type']
-    customer_types = tree[shop]['Customer Type']
-    if segments:
-        segment = st.multiselect("Choose a segment:",segments)
-        product_info.segments = segment
+
     if device_types:
         device_type_options = list(device_types.keys())
         device_type = st.selectbox('Devices Type:',device_type_options)
         product_info.device_type = device_type
-        plan_options = tree[shop]['Device Type'][device_type]['plans']
         product_options = tree[shop]['Device Type'][device_type]['products']
         tcom_link = tree[shop]['Device Type'][device_type]['entry_point']
-        if plan_options:
-            plan = st.multiselect('On Plans:',plan_options, help=tcom_link)
-            product_info.plans = plan
-            
-            if product_options:
-                apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
-                if apply_to_all == 'Yes':
-                    products = st.multiselect('Products:',product_options)
-                    product_info.products = products
-            
-            #### Turn back if Streamlit is not gettign response from APIs
-            # apply_to_all = st.radio('Looking for specific product?',['No','Yes'])
-            # if apply_to_all == 'Yes':
-            #     products = st.text_input('Products',placeholder="Please type product names separated by , . ")
-            #     #products = st.multiselect('Products:',product_options)
-            #     product_info.products = products
-
-        else:
-            if product_options:
-                products = st.multiselect('Products:',product_options)
-                product_info.products = products
+        if product_options:
+            products = st.multiselect('Products:',product_options)
+            product_info.products = products
 
 promo_details = PromoDetails()
 
@@ -92,27 +67,11 @@ with st.expander("Promotion Details"):
     apply_by = st.selectbox('Apply by:',['BoH','Auto','Base+'])
     promo_details.apply = apply_by
 
-    if customer_types:
-        eligibility = st.multiselect('Customer Type:',customer_types)
-        promo_details.elegibility = eligibility
+
     dysplay_name = st.text_input('Dislay Name:',placeholder='e.g. $200 off your bill.')
     promo_details.name = dysplay_name
     credits = st.number_input('Credit Amount (AUD) :',min_value=0)
     promo_details.credit = f'{credits} AUD'
-    if shop == 'Pospaid' and apply_to_all == 'No':
-        if plan_options:
-            recurring = st.radio('Is this a reccuring discount?',['No','Yes'])
-
-            if recurring == 'Yes':
-                recurring_period = st.number_input('Discount Period (mths):',min_value=0)
-                promo_details.recurring = recurring_period
-                
-    if 'Fixed' in shop:
-        if plan_options:
-            recurring = st.radio('Is this a reccuring discount?',['No','Yes'])
-            if recurring == 'Yes':
-                recurring_period = st.number_input('Discount Period (mths):',min_value=0)
-                promo_details.recurring = f'{recurring_period} mths'
     
     col_start, col_end = st.columns(2)
     with col_start:

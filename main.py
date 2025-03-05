@@ -1,5 +1,8 @@
 # Run this page with command "streamlit run Home.py"
 import streamlit as st
+import reqease
+
+#reqease.Get("https://tapi.telstra.com/presentation/v1/ecommerce-products/products/mobility/PREPAID/PREPAID_MOBILE/NEW").to_file('mobile.json')
 
 
 # st.set_page_config(page_title="AgoraOps Hub | Home",

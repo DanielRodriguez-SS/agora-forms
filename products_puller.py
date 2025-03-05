@@ -22,15 +22,29 @@ def fetch(session:requests, url:str) -> requests.Response:
 
 def get_products_from_shop(shop_url:str, shop_name:str) -> dict[str,list]:
     response = fetch(session, url=shop_url)
-    #print(shop_url)
-    #print(response)
     product_families =  response['data']['deviceFamilies']
     devices = []
-    for family in product_families:
-        products = family['devices']
-        for product in products:
-            devices.append(f"{product['code']} - {product['name']}")
-    return {shop_name:devices}
+    if shop_name == 'PREPAID_MOBILE':
+        handsets = []
+        simsKits = []
+        rechargeKits = []
+        for family in product_families:
+            products = family['devices']
+            for product in products:
+                if family['name'] == "Prepaid Recharge":
+                    rechargeKits.append(f"{product['code']} - {product['name']}")
+                elif family['name'] == "SIM KIT":
+                    simsKits.append(f"{product['code']} - {product['name']}")
+                else:
+                    handsets.append(f"{product['code']} - {product['name']}")
+
+        return {"PREPAID_MOBILE":handsets, "PREPAID_SIMs":simsKits, "PREPAID_RECHARGE":rechargeKits}
+    else:
+        for family in product_families:
+            products = family['devices']
+            for product in products:
+                devices.append(f"{product['code']} - {product['name']}")
+        return {shop_name:devices}
 
 async def async_get_products_from_shop(shop_url,shop_name):
     return await asyncio.to_thread(get_products_from_shop,shop_url,shop_name)
@@ -60,5 +74,12 @@ def collect_products_from_shopAPIs() -> dict:
         pack_dict.update(dict)
     return pack_dict
 
-#if "__main__" == __name__:
-#    pass
+
+
+def split_categories_from_mobile() -> dict:
+    mobile = collect_products_from_shopAPIs()
+    return mobile
+
+
+# if "__main__" == __name__:
+#    print(split_categories_from_mobile())
