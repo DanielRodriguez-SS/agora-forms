@@ -8,7 +8,7 @@ import reqease
 # st.set_page_config(page_title="AgoraOps Hub | Home",
 #                        page_icon="🎛️",layout="wide")
 
-#css.hide_streamlit_defualt_menu_footer()
+
 
 
 pages = {
