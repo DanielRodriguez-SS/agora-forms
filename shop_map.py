@@ -46,4 +46,14 @@ tree = {
              }
           }
       },
+     'Rewards': {
+         'Device Type': {
+             'Mobiles & Plans': {
+                'placeholder_brand': 'Apple',
+                'placeholder_name': 'iPhone 15',
+                 'entry_point':'',
+                 'products':collect_products_from_shopAPIs()['BOOST']
+             }
+          }
+      }
 }
