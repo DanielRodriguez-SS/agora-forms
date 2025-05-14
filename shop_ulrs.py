@@ -6,6 +6,7 @@ class PublicAPIs:
     PREPAID_MBB:str = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/products/mobility/PREPAID/PREPAID_MBB/NEW'
     PREPAID_TABLET:str = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/products/mobility/PREPAID/PREPAID_TABLET/NEW'
     BOOST:str = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/products/mobility/BOOST/BOOST/NEW'
+    STOCK_API:str = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/con/stocks'
     #REWARDS_CONSUMER:str = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/products/loyalty_con'
     #REWARDS_DAVINCI:str = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/products/loyalty_con_dv'
     #REWARDS_SMB:str = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/products/loyalty_smb'
