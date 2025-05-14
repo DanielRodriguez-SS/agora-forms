@@ -5,7 +5,7 @@ from shop_ulrs import PublicAPIs
 st.set_page_config(page_title="AgoraOps Hub | 🕐 App o'clock",
                        page_icon="🎛️",layout="wide")
 
-
+# New Sotck
 def get_stocks(sku:str) -> int:
     stocks_maui_api = reqease.Get(PublicAPIs.STOCK_API).to_dict
     stocks = stocks_maui_api['data']['stocks']
