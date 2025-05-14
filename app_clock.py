@@ -5,9 +5,11 @@ from shop_ulrs import PublicAPIs
 st.set_page_config(page_title="AgoraOps Hub | 🕐 App o'clock",
                        page_icon="🎛️",layout="wide")
 
+
+STOCK_API = 'https://tapi.telstra.com/presentation/v1/ecommerce-products/con/stocks'
 # New Sotck
 def get_stocks(sku:str) -> int:
-    stocks_maui_api = reqease.Get(PublicAPIs.STOCK_API).to_dict
+    stocks_maui_api = reqease.Get(STOCK_API).to_dict
     stocks = stocks_maui_api['data']['stocks']
     for stock in stocks:
         if stock['sku'] == sku:
