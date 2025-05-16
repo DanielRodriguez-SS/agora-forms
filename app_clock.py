@@ -19,7 +19,8 @@ st.markdown("<h1>Units Available</h1>", unsafe_allow_html=True)
 st.markdown("<h2>Prepaid</h2>", unsafe_allow_html=True)
 
 left, right = st.columns([0.3, 0.7], vertical_alignment="center")
-left.html(f'''🔥 $39 Pre-Paid SIM Starter Kit''')
+left.html(f'''🔥 $39 Pre-Paid SIM Starter Kit
+          <a style="text-decoration:none;" href="https://checkout.telstra.com.au/consumer/prepaid?sku=100253950" target="_blank">🔗 Buy</a>''')
 click_units_left = right.button("👉 Units Left")
 if click_units_left:
     st.html(f'''
