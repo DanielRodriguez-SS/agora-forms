@@ -24,5 +24,5 @@ click_units_left = right.button("👉 Units Left")
 if click_units_left:
     st.html(f'''
             <span style="font-size: 2rem; font-weight: bold; color: #e63946; background-color: #ffe5e5; padding: 0.5rem 1rem; border-radius: 0.5rem;">
-                {get_stocks('100253952')}
+                {get_stocks('100253950')}
             </span>''')
