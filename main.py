@@ -1,6 +1,5 @@
 # Run this page with command "streamlit run Home.py"
 import streamlit as st
-import reqease
 
 #reqease.Get("https://tapi.telstra.com/presentation/v1/ecommerce-products/products/mobility/PREPAID/PREPAID_MOBILE/NEW").to_file('mobile.json')
 
@@ -26,7 +25,8 @@ pages = {
     ],
     "Tools": [
         st.Page("linkcraft.py", title="🛠️ LinkCraft Pro"),
-        st.Page("console_search.py", title="🖥️ Console Search")
+        st.Page("console_search.py", title="🖥️ Console Search"),
+        st.Page("rewards_pricing.py", title="💲 Rewards Pricing")
     ]
 }
 
