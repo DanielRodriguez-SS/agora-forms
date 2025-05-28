@@ -47,7 +47,20 @@ point_tiers = [
     300000,
     350000,
     400000,
-    450000
+    450000,
+    500000,
+    600000,
+    700000,
+    800000,
+    900000,
+    1000000,
+    1100000,
+    1200000,
+    1300000,
+    1400000,
+    1500000,
+    2000000,
+    2500000
 ]
 
 data = {
@@ -60,26 +73,20 @@ calculate_price = st.button('Calculate Price')
 if calculate_price:
     products = price_details_text.split('\n')
     for product in products:
-        #st.write(product.split('\t'))
         sku, rrp, vpp = product.split('\t')
         outrightPoints = round((float(rrp)/1.1)/float(vpp), -2)
-        #st.write(f"SKU:{sku}    RRP:{rrp}   VPP:{vpp}   OP:{int(outrightPoints)}")
         current_price = float(rrp)
         i = 0
-        #data['Sku'].append(sku)
         while(current_price >= 0 and (point_tiers[i] < int(outrightPoints))):
-            #st.write(f"DOLLARS: {round(current_price)} POINTS: {point_tiers[i]}")
             if i:
                 data['Sku'].append('')
             else:
                 data['Sku'].append(sku)
-            data['Pay'].append(round(current_price))
+            data['Pay'].append(round(current_price, 2))
             data['Points'].append(point_tiers[i])
-            current_price = float(rrp) - (point_tiers[i+1]*float(vpp))
+            current_price = float(rrp) - (point_tiers[i+1]*float(vpp)*1.1)
             i += 1
-        #st.write(f"DOLLARS: {0} POINTS: {int(outrightPoints)}")
         data['Sku'].append('')
         data['Pay'].append(0)
         data['Points'].append(int(outrightPoints))
-        #st.write('#')
     st.dataframe(pd.DataFrame(data),use_container_width=True, hide_index=True)
