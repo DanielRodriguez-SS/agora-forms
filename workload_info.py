@@ -110,7 +110,14 @@ st.markdown(f'{len(future_dates_df)} {plural_word(len(future_dates_df),"Ticket")
 
 # Convert data dictionary to a DataFrame
 graph_df = pd.DataFrame(list(graph_dict.items()), columns=['Week', 'Tickets'])
+graph_df['Color'] = graph_df['Tickets'].apply(lambda x: 'green' if x < 4 else ('orange' if x < 8 else 'red'))
+#st.dataframe(graph_df)
 chart = alt.Chart(graph_df).mark_bar(color='#ffaa0088').encode(x=alt.X('Week',sort=None,title='Week'),y='Tickets')
+chart = alt.Chart(graph_df).mark_bar().encode(
+    x=alt.X('Week',sort=None,title='Week'),
+    y='Tickets',
+    color=alt.Color('Color', scale=alt.Scale(domain=['green', 'orange', 'red'], range=['#4caf50', '#ffa726','#f44336']), legend=None)
+)
 st.altair_chart(chart, use_container_width=True)
 
 st.markdown('# 🗓️ Weekly Task Breakdown')
