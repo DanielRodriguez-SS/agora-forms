@@ -1,6 +1,5 @@
 import streamlit as st
 import reqease
-from shop_ulrs import PublicAPIs
 
 st.set_page_config(page_title="AgoraOps Hub | 🕐 App o'clock",
                        page_icon="🎛️",layout="wide")

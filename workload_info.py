@@ -24,6 +24,7 @@ with st.sidebar:
     data = {}
     data['Ticket #'] = st.text_input('Ticket #')
     data['Summary'] = st.text_input('Summary')
+    is_double_impact = st.checkbox('This Ticket will have double impact')
     data['Epic'] = st.text_input('Epic')
     data['Due Date'] = datetime.combine(st.date_input('Due Date'),time(0,0))
     data['Notes'] = st.text_input('Notes')
@@ -38,6 +39,11 @@ with st.sidebar:
                 is_exting_jira = db.find_jira(client,data={'Ticket #':data['Ticket #']})
                 if not is_exting_jira:
                     db.insert_jira(client,data)
+                    if is_double_impact:
+                        data2 = data
+                        data2.pop('_id', None)
+                        data2['Ticket #'] = f"{data['Ticket #']}_+"
+                        db.insert_jira(client,data2)
                     st.toast(f'{data["Ticket #"]} JIRA Added!', icon='👍')
                 else:
                     st.toast('JIRA Already Exists on Database', icon='🚫')
