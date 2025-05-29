@@ -5,6 +5,7 @@ import pandas as pd
 from datetime import datetime, time
 import calendar
 import altair as alt
+import copy
 #'''
 #Dynamic Tabs Creation Ref:
 #https://docs.kanaries.net/topics/Streamlit/streamlit-tabs
@@ -40,7 +41,8 @@ with st.sidebar:
                 if not is_exting_jira:
                     db.insert_jira(client,data)
                     if is_double_impact:
-                        data2 = data
+                        #data2 = data
+                        data2 = copy.deepcopy(data)
                         data2.pop('_id', None)
                         data2['Ticket #'] = f"{data['Ticket #']}_+"
                         db.insert_jira(client,data2)
