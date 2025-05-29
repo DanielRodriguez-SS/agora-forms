@@ -53,6 +53,27 @@ with st.sidebar:
                 st.toast('Incorrect Magic Pass!', icon='🚫')
         else:
             st.toast('JIRA Details are missing!', icon='🚫')
+    
+    st.markdown('# 🧹 Clean Database')
+
+    target_ticket = st.text_input('Ticket # to remove')
+    delete = st.button('Delete')
+    if delete:
+        if target_ticket and magic_pass:
+            if magic_pass == f'AgoraOps{datetime.now().strftime("%d%m%y")}':
+                client = db.connect_to_db()
+                is_exting_jira_todelete = db.find_jira(client,data={'Ticket #':target_ticket})
+                if is_exting_jira_todelete:
+                    db.delete_jira(client,{'Ticket #':target_ticket})
+                    st.toast(f'{target_ticket} JIRA Deleted!', icon='👍')
+                else:
+                    st.toast('JIRA Does Not Exists on Database', icon='🚫')
+            else:
+                st.toast('Incorrect Magic Pass!', icon='🚫')
+        else:
+            st.toast('Ticket or Magic Pass are missing!', icon='🚫')
+
+
 
 # Get client from DB connection
 client = db.connect_to_db()

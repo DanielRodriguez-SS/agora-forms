@@ -28,3 +28,7 @@ def insert_jira(client:MongoClient, data:dict):
 def find_jira(client:MongoClient, data:dict):
     jiras_collection = client['gtm_trading']['jiras']
     return jiras_collection.find_one(data)
+
+def delete_jira(client:MongoClient, data:dict):
+    jiras_collection = client['gtm_trading']['jiras']
+    jiras_collection.delete_one(data)
