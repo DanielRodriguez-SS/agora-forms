@@ -8,7 +8,6 @@ pages = {
     "Monitor": [
         st.Page("live_promos.py", title="🔴 Promos Live Now"),
         st.Page("rewards_search.py", title="🏆 Rewards Search"),
-        #st.Page("app_clock.py", title="🕐 App o'clock"),
     ],
     "Workload": [
         st.Page("workload_info.py", title="📄 Details")
